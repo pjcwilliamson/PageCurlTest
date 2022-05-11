@@ -49,4 +49,6 @@ public class ViewPager2Adapter extends RecyclerView.Adapter<ViewPager2Adapter.Vi
             textView = itemView.findViewById(R.id.textView2);
         }
     }
+
+
 }
