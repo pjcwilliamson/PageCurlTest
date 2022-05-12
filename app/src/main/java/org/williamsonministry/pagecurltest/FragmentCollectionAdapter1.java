@@ -19,17 +19,28 @@ public class FragmentCollectionAdapter1 extends FragmentStatePagerAdapter {
     @NonNull
     @Override
     public Fragment getItem(int position) {
-        DisplayCardsFragment fragment = DisplayCardsFragment.newInstance(words.get(position));
+        String word1 = words.get((position+1)*2-2);
+        String word2;
+        if (words.size() > (position+1)*2-1) {
+            word2 = words.get((position + 1) * 2 - 1);
+        } else  {
+            word2 = "Blank";
+        }
+        DisplayCardsFragment fragment = DisplayCardsFragment.newInstance(word1, word2);
         return fragment;
     }
 
     @Override
     public int getCount() {
-        return words.size();
+        if (words.size() % 2 == 0)  {
+            return words.size()/2;
+        }   else    {
+            return (1+words.size())/2;
+        }
     }
 
-    @Override
-    public float getPageWidth(int position) {
-        return (0.5f);
-    }
+//    @Override
+//    public float getPageWidth(int position) {
+//        return (0.5f);
+//    }
 }

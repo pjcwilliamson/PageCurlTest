@@ -11,10 +11,11 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 public class DisplayCardsFragment extends Fragment {
-    public static final String ARG_NAME = "name";
+    public static final String ARG_NAME_1 = "name1";
+    public static final String ARG_NAME_2 = "name2";
 
-    private String mName;
-    private TextView textView;
+    private String mName1, mName2;
+    private TextView txtLeft, txtRight;
 
     public DisplayCardsFragment() {
         // Required empty public constructor
@@ -24,14 +25,16 @@ public class DisplayCardsFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param mName Parameter 1.
+     * @param mName1 Parameter 1.
+     * @param mName2 Parameter 2
      * @return A new instance of fragment DisplayCardsFragment.
      */
     // TOD0: Rename and change types and number of parameters
-    public static DisplayCardsFragment newInstance(String mName) {
+    public static DisplayCardsFragment newInstance(String mName1, String mName2) {
         DisplayCardsFragment fragment = new DisplayCardsFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_NAME, mName);
+        args.putString(ARG_NAME_1, mName1);
+        args.putString(ARG_NAME_2, mName2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -40,7 +43,8 @@ public class DisplayCardsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mName = getArguments().getString(ARG_NAME);
+            mName1 = getArguments().getString(ARG_NAME_1);
+            mName2 = getArguments().getString(ARG_NAME_2);
         }
     }
 
@@ -49,9 +53,13 @@ public class DisplayCardsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.page_0_fragment, container, false);
 
-        textView = v.findViewById(R.id.textView2);
+        txtLeft = v.findViewById(R.id.txtLeft);
 
-        textView.setText(mName);
+        txtLeft.setText(mName1);
+
+        txtRight = v.findViewById(R.id.txtRight);
+
+        txtRight.setText(mName2);
 
         return v;
     }

@@ -40,9 +40,9 @@ public class MainActivity extends AppCompatActivity {
         adapter = new FragmentCollectionAdapter1(getSupportFragmentManager(),1, words);
         viewPager2.setAdapter(adapter);
 
-        BookFlipPageTransformer bookFlipPageTransformer2 = new BookFlipPageTransformer();
+        BookFlipPageTransformerEdit bookFlipPageTransformer2 = new BookFlipPageTransformerEdit();
         bookFlipPageTransformer2.setEnableScale(true);
-        bookFlipPageTransformer2.setScaleAmountPercent(10f);
+        bookFlipPageTransformer2.setScaleAmountPercent(0f);
 
         viewPager2.setPageTransformer(true, bookFlipPageTransformer2);
 
@@ -54,5 +54,15 @@ public class MainActivity extends AppCompatActivity {
         words.add("Helium");
         words.add("Lithium");
         words.add("Beryllium");
+        words.add("Boron");
+        words.add("Carbon");
+        words.add("Nitrogen");
+        words.add("Oxygen");
+        words.add("Fluorine");
+        words.add("Neon");
+        words.add("Sodium");
+        words.add("Magnesium");
+        words.add("Aluminium");
+
     }
 }
