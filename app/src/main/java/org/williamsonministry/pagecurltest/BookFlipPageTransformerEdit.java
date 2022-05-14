@@ -10,19 +10,25 @@ public class BookFlipPageTransformerEdit implements ViewPager.PageTransformer {
     private final int RIGHT = 1;
     private final int CENTER = 0;
     private float scaleAmountPercent = 5f;
-    private boolean enableScale = true;
+    private boolean enableScale = false;
 
     @Override
     public void transformPage(@NonNull View page, float position) {
-        //View page = page2.findViewById(R.id.layoutRight);
+        View rightView = page.findViewById(R.id.layoutRight);
+        View leftView = page.findViewById(R.id.layoutLeft);
+        // TODO: 5/14/2022 Make left view stay still... for now
         float percentage = 1 - Math.abs(position);
         // Don't move pages once they are on left or right
         if (position > CENTER && position <= RIGHT)
         {
             // This is behind page
-            page.setTranslationX(-position * (page.getWidth()));
-            page.setTranslationY(0);
-            page.setRotation(0);
+            rightView.setTranslationX(-position * (rightView.getWidth()));
+            rightView.setTranslationY(0);
+            rightView.setRotation(0);
+
+            leftView.setTranslationX(0);
+            leftView.setTranslationY(0);
+            leftView.setRotation(0);
             if (enableScale)
             {
                 float amount = ((100 - scaleAmountPercent) + ( scaleAmountPercent * percentage)) / 100;
@@ -32,9 +38,17 @@ public class BookFlipPageTransformerEdit implements ViewPager.PageTransformer {
         // Otherwise flip the current page
         else
         {
-            page.setVisibility(View.VISIBLE);
-            flipPage(page, position, percentage);
+            rightView.setVisibility(View.VISIBLE);
+            leftView.setVisibility(View.VISIBLE);
+            flipPage(rightView, position, percentage);
+            stopPage(leftView,position,percentage);
         }
+    }
+
+    private void stopPage(View page, float position, float percentage)  {
+        setVisibility(page, position);
+        page.setTranslationX(0f);
+
     }
 
     private void flipPage(View page, float position, float percentage)
@@ -43,7 +57,7 @@ public class BookFlipPageTransformerEdit implements ViewPager.PageTransformer {
         page.setCameraDistance(-12000);
         setVisibility(page, position);
         setTranslation(page);
-        setPivot(page, 200f, page.getHeight() * 0.5f);
+        setPivot(page, 0, page.getHeight() * 0.5f);
         setRotation(page, position, percentage);
     }
 
@@ -62,9 +76,9 @@ public class BookFlipPageTransformerEdit implements ViewPager.PageTransformer {
     }
 
     private void setTranslation(View page) {
-        ViewPager viewPager = (ViewPager) page.getParent();
+        ViewPager viewPager = (ViewPager) page.getParent().getParent();
         int scroll = viewPager.getScrollX() - page.getLeft();
-        page.setTranslationX(scroll);
+        page.setTranslationX(scroll+page.getWidth());
     }
 
     private void setSize(View page, float position, float percentage) {
