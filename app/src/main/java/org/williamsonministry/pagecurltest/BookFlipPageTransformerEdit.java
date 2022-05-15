@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.viewpager.widget.ViewPager;
 
 public class BookFlipPageTransformerEdit implements ViewPager.PageTransformer {
+    private final int CAMERA_DISTANCE = -12000;
     private final int LEFT = -1;
     private final int RIGHT = 1;
     private final int CENTER = 0;
@@ -26,9 +27,13 @@ public class BookFlipPageTransformerEdit implements ViewPager.PageTransformer {
             rightView.setTranslationY(0);
             rightView.setRotation(0);
 
+            //Still vry much got to work on this
+            reverseFlipPage(leftView, position, percentage);
+
             leftView.setTranslationX(-position * (rightView.getWidth()+leftView.getWidth()));
             leftView.setTranslationY(0);
             leftView.setRotation(0);
+
             if (enableScale)
             {
                 float amount = ((100 - scaleAmountPercent) + ( scaleAmountPercent * percentage)) / 100;
@@ -41,8 +46,17 @@ public class BookFlipPageTransformerEdit implements ViewPager.PageTransformer {
             rightView.setVisibility(View.VISIBLE);
             leftView.setVisibility(View.VISIBLE);
             flipPage(rightView, position, percentage);
-            stopPage(leftView,position,percentage);
+            stopPage(leftView, position, percentage);
         }
+    }
+
+    private void reverseFlipPage(View page, float position, float percentage) {
+        page.setCameraDistance(CAMERA_DISTANCE);
+        //setVisibility(page,-position);
+        setTranslation(page);
+        setPivot(page, 0, page.getHeight() * 0.5f);
+        setReverseRotation(page, position, percentage);
+
     }
 
     private void stopPage(View page, float position, float percentage)  {
@@ -55,7 +69,7 @@ public class BookFlipPageTransformerEdit implements ViewPager.PageTransformer {
     private void flipPage(View page, float position, float percentage)
     {
         // Flip this page
-        page.setCameraDistance(-12000);
+        page.setCameraDistance(CAMERA_DISTANCE);
         setVisibility(page, position);
         setTranslation(page);
         setPivot(page, 0, page.getHeight() * 0.5f);
@@ -89,6 +103,14 @@ public class BookFlipPageTransformerEdit implements ViewPager.PageTransformer {
 
     private void setRotation(View page, float position, float percentage) {
         if (position > 0) {
+            page.setRotationY(-180 * (percentage + 1));
+        } else {
+            page.setRotationY(180 * (percentage + 1));
+        }
+    }
+
+    private void setReverseRotation(View page, float position, float percentage)    {
+        if (position <= 0) {
             page.setRotationY(-180 * (percentage + 1));
         } else {
             page.setRotationY(180 * (percentage + 1));
