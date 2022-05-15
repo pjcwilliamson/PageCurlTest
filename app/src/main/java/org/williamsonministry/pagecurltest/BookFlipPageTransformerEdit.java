@@ -19,14 +19,14 @@ public class BookFlipPageTransformerEdit implements ViewPager.PageTransformer {
         // TODO: 5/14/2022 Make left view stay still... for now
         float percentage = 1 - Math.abs(position);
         // Don't move pages once they are on left or right
-        if (position > CENTER && position <= RIGHT)
+        if (position >= CENTER && position <= RIGHT)
         {
             // This is behind page
-            rightView.setTranslationX(-position * (rightView.getWidth()));
+            rightView.setTranslationX(-position * (rightView.getWidth()+leftView.getWidth()));
             rightView.setTranslationY(0);
             rightView.setRotation(0);
 
-            leftView.setTranslationX(0);
+            leftView.setTranslationX(-position * (rightView.getWidth()+leftView.getWidth()));
             leftView.setTranslationY(0);
             leftView.setRotation(0);
             if (enableScale)
@@ -46,8 +46,9 @@ public class BookFlipPageTransformerEdit implements ViewPager.PageTransformer {
     }
 
     private void stopPage(View page, float position, float percentage)  {
-        setVisibility(page, position);
-        page.setTranslationX(0f);
+        ViewPager viewPager = (ViewPager) page.getParent().getParent();
+        int scroll = viewPager.getScrollX();
+        page.setTranslationX(scroll);
 
     }
 

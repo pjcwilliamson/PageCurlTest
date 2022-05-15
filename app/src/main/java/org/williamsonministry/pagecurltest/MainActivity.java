@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         viewPager2.setAdapter(adapter);
 
         BookFlipPageTransformerEdit bookFlipPageTransformer2 = new BookFlipPageTransformerEdit();
-        bookFlipPageTransformer2.setEnableScale(true);
+        bookFlipPageTransformer2.setEnableScale(false);
         bookFlipPageTransformer2.setScaleAmountPercent(0f);
 
         viewPager2.setPageTransformer(true, bookFlipPageTransformer2);
