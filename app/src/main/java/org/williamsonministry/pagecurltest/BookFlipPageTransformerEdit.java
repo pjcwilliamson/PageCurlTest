@@ -13,6 +13,8 @@ public class BookFlipPageTransformerEdit implements ViewPager.PageTransformer {
     private float scaleAmountPercent = 5f;
     private boolean enableScale = false;
 
+    // TODO: 5/15/2022 Look here: https://medium.com/android-news/creating-an-intro-screen-for-your-app-using-viewpager-pagetransformer-9950517ea04f 
+
     @Override
     public void transformPage(@NonNull View page, float position) {
         View rightView = page.findViewById(R.id.layoutRight);
@@ -26,6 +28,7 @@ public class BookFlipPageTransformerEdit implements ViewPager.PageTransformer {
             rightView.setTranslationX(-position * (rightView.getWidth()+leftView.getWidth()));
             rightView.setTranslationY(0);
             rightView.setRotation(0);
+            //rightView.setVisibility(View.VISIBLE);
 
             //Still vry much got to work on this
             reverseFlipPage(leftView, position, percentage);
@@ -52,11 +55,10 @@ public class BookFlipPageTransformerEdit implements ViewPager.PageTransformer {
 
     private void reverseFlipPage(View page, float position, float percentage) {
         page.setCameraDistance(CAMERA_DISTANCE);
-        //setVisibility(page,-position);
+        setVisibility(page,-position);
         setTranslation(page);
-        setPivot(page, 0, page.getHeight() * 0.5f);
-        setReverseRotation(page, position, percentage);
-
+        setPivot(page, page.getWidth(), page.getHeight() * 0.5f);
+        setRotation(page, position, percentage);
     }
 
     private void stopPage(View page, float position, float percentage)  {
@@ -108,15 +110,6 @@ public class BookFlipPageTransformerEdit implements ViewPager.PageTransformer {
             page.setRotationY(180 * (percentage + 1));
         }
     }
-
-    private void setReverseRotation(View page, float position, float percentage)    {
-        if (position <= 0) {
-            page.setRotationY(-180 * (percentage + 1));
-        } else {
-            page.setRotationY(180 * (percentage + 1));
-        }
-    }
-
     public float getScaleAmountPercent() {
         return scaleAmountPercent;
     }
