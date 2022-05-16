@@ -13,7 +13,8 @@ public class BookFlipPageTransformerEdit implements ViewPager.PageTransformer {
     private float scaleAmountPercent = 5f;
     private boolean enableScale = false;
 
-    // TODO: 5/15/2022 Look here: https://medium.com/android-news/creating-an-intro-screen-for-your-app-using-viewpager-pagetransformer-9950517ea04f 
+    // TODO: 5/15/2022 Look here: https://medium.com/android-news/creating-an-intro-screen-for-your-app-using-viewpager-pagetransformer-9950517ea04f
+    // TODO: 5/15/2022 Look here: https://developer.android.com/training/animation/screen-slide#java 
 
     @Override
     public void transformPage(@NonNull View page, float position) {
